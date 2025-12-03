@@ -1,6 +1,7 @@
 # CashApp/backend/app/schemas.py
 from pydantic import BaseModel, Field
 from typing import List
+from datetime import datetime
 
 class CardBase(BaseModel):
     name: str
@@ -20,3 +21,19 @@ class Card(CardBase):
 
 # Por si luego quieres listar
 CardList = list[Card]
+
+class TransactionBase(BaseModel):
+    type: str  # purchase, payment, installment
+    amount: float
+    description: str | None = None
+    card_id: int
+
+class TransactionCreate(TransactionBase):
+    pass
+
+class Transaction(TransactionBase):
+    id: int
+    created_at: datetime
+
+    class Config:
+        orm_mode = True

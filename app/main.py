@@ -1,11 +1,13 @@
 # CashApp/backend/app/main.py
 import os
+from app.routers import health, cards, transactions
 from dotenv import load_dotenv
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.database import Base, engine
-from app.routers import health, cards  # cards lo creamos en el paso 4
+from app.routers import health, cards  # cards
+from app.routers import card_stats
 
 # Cargar env
 ENV_FILE = os.getenv("ENV_FILE", ".env.development")
@@ -33,6 +35,8 @@ app.add_middleware(
 # Rutas
 app.include_router(health.router)
 app.include_router(cards.router, prefix="/cards", tags=["cards"])
+app.include_router(transactions.router, prefix="/transactions", tags=["transactions"])
+app.include_router(card_stats.router, prefix="/stats", tags=["stats"])
 
 @app.get("/")
 async def root():
