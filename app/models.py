@@ -1,0 +1,13 @@
+# CashApp/backend/app/models.py
+from sqlalchemy import Column, Integer, String, Float
+from app.database import Base
+
+class Card(Base):
+    __tablename__ = "cards"
+
+    id = Column(Integer, primary_key=True, index=True)
+    name = Column(String, nullable=False)
+    credit_limit = Column(Float, nullable=False)
+    annual_rate = Column(Float, nullable=False)  # TEA en %
+    cutoff_day = Column(Integer, nullable=False)  # día de corte (1-31)
+    payment_day = Column(Integer, nullable=False)  # día de pago (1-31)
